@@ -4,6 +4,9 @@ This repository contains materials related to a machine learning project involvi
 
 ## Contents
 
+- **Gradcam_examples folder**  
+  This folder contains some interpretability elements developed for this project, mainly the gradcam activations in the images.
+
 - **poster.pdf**  
   A high-level summary poster of the project, suitable for presentations or conferences. It includes visuals and concise explanations of the approach, results, and key findings.
 
