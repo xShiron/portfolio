@@ -17,13 +17,15 @@ This repository contains materials related to a machine learning project involvi
   Python script that combines the Xception model with an LSTM (Long Short-Term Memory) layer, possibly for tasks involving temporal sequences of images (e.g., video classification or medical imaging sequences).
 
 ## Usage
+To try the project for yourself, you can find the Training, Testing and Validation sets that I curated for this project here:
+- **Testing:** https://mega.nz/file/GcVgFRLY#sPSe3DbVd9ThJhdXluvFqttjLrk5Iarq9kKYKCtAboo
+- **Training:** https://mega.nz/file/XQ0FHJLT#-6I4eyTgPReiGT8UKdYnxzxODGLjz-ct4ddEjaYr8JI
+- **Validation:** https://mega.nz/file/DZ8EiABS#QZ8elzaTwRnK-8a8UW3yHzE3YOcOjAg9sZqM_HVE9sQ
 
 To run the model without temporal cues:
-
 ```bash
 python train_xception.py
 ```
-
 To run the model with temporal cues (LSTM):
 
 ```bash
