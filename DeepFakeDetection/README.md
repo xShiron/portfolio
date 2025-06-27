@@ -22,6 +22,8 @@ To try the project for yourself, you can find the Training, Testing and Validati
 - **Training:** https://mega.nz/file/XQ0FHJLT#-6I4eyTgPReiGT8UKdYnxzxODGLjz-ct4ddEjaYr8JI
 - **Validation:** https://mega.nz/file/DZ8EiABS#QZ8elzaTwRnK-8a8UW3yHzE3YOcOjAg9sZqM_HVE9sQ
 
+After downloading these files, place them in the same folder as the scripts and you're ready to go.
+
 To run the model without temporal cues:
 ```bash
 python train_xception.py
