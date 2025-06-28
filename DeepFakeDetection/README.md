@@ -1,6 +1,5 @@
-# Project Overview
-
-This repository contains materials related to a machine learning project involving deep learning models for classification or sequence analysis tasks. It includes training scripts and documentation in the form of a report and a poster.
+# Deep Fake Detection Project
+  This folder contains all the code, example images, a final report and a poster designed for a poster session about Deep Learning projects that were developed for the Deep Fake Detection Project.
 
 ## Contents
 
@@ -8,16 +7,16 @@ This repository contains materials related to a machine learning project involvi
   This folder contains some interpretability elements developed for this project, mainly the gradcam activations in the images.
 
 - **poster.pdf**  
-  A high-level summary poster of the project, suitable for presentations or conferences. It includes visuals and concise explanations of the approach, results, and key findings.
+  A poster that was designed and presented for a poster presenting session about Deep Learning and its applications in FCUL's Department of Informatics.
 
 - **report.pdf**  
-  A detailed technical report that describes the problem, methodology, experiments, results, and conclusions. Ideal for readers who want a deeper understanding of the project.
+  This file is the final report that was written for this project, it contains all the results and the methodology that was used when designing the experiments that were performed.
 
 - **train_xception.py**  
-  Python script that implements a training pipeline using the Xception model architecture. This is likely used for image classification tasks and serves as the baseline or main model.
+  Python script that contains the code developed for the project, this script contains code for an XceptionNet backbone, an EfficientNet-B3 and also different loss functions that were tested.
 
 - **train_xception_lstm.py**  
-  Python script that combines the Xception model with an LSTM (Long Short-Term Memory) layer, possibly for tasks involving temporal sequences of images (e.g., video classification or medical imaging sequences).
+  This files is exactly the same as the one above, except that it contains an LSTM head in the XceptionNet model's head.
 
 ## Usage
 To try the project for yourself, you can find the Training, Testing and Validation sets that I curated for this project here:
