@@ -1,4 +1,4 @@
-# Community Detection Project
+# Amazon Co-Purchases Project
   This folder contains the files produced in the analysis of the Amazon Co-Purchases network dataset. This project was developed to learn and better understand the techniques used in Network Science to analyze large networks.
 
 ## Repository Contents
