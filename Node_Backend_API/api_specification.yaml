@@ -1,0 +1,1057 @@
+openapi: 3.0.0
+
+info:
+  title: API de Perdidos e Achados
+  description: API preliminar com os métodos que serão utilizados no projeto a desenvolver no âmbito da disciplina Planeamento e Gestão de Projetos. Desenvolvida pelo Grupo 21. <hr>
+    
+    Também será utilizada de forma não preliminar nas disciplinas Projeto
+    de Tecnologias de Redes e Projeto de Tecnologias de Informação. <hr>
+    
+    Os métodos encontram-se separados por tags que incluem métodos comuns ao tema onde se enquadram.
+  version: 0.1.9
+
+paths:
+  /user:
+    post:
+      summary: "[RF-01] Cria um utilizador."
+      description: É criado um novo utilizador.
+      
+      operationId: createUser
+      requestBody:
+        description: Utilizador criado.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Utilizador'
+      
+      tags:
+        - utilizador
+        
+      responses:
+        '201':
+          description: Utilizador criado com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Utilizador'
+        
+        '404':
+          description: Recurso não encontrado.
+        
+        '409':
+          description: Utilizador já existe.
+                
+  /user/login:
+    get:
+      summary: "[RF-04] Dá login a um utilizador no sistema."
+      description: É iniciada a sessão de um utilizador.
+      
+      tags:
+        - sessões
+      
+      responses:
+        '200':
+          description: Sessão iniciada com sucesso.
+        '404':
+          description: Sessão não encontrada.
+          
+  /user/logout:
+    get:
+      summary: "[RF-04] Dá logout a um utilizador no sistema."
+      description: É terminada a sessão de um utilizador.
+      
+      tags:
+        - sessões
+      
+      responses:
+        '200':
+          description: Sessão terminada com sucesso.
+
+  /user/deactivate/{userNic}:
+    put:
+      summary: "[RF-05] Desativa conta do utilizador."
+      description: Se for usado por um utilizador apenas pode ser usado com o seu próprio NIC, mas um admin pode alterar o NIC passado como parâmetro.
+      
+      parameters:
+        - in: path
+          name: userNic
+          required: true
+          schema:
+            type: integer
+      
+      tags:
+        - gestao de contas
+      
+      responses:
+        '200':
+          description: Conta desativada com sucesso.
+        '400':
+          description: userNic inválido.
+        '404':
+          description: Utilizador não encontrado.
+          
+  /user/reactivate/{userNic}:
+    put:
+      summary: "[RF-05] Reativa conta do utilizador."
+      description: Se for usado por um utilizador apenas pode ser usado com o seu próprio NIC, mas um admin pode alterar o NIC passado como parâmetro.
+      
+      parameters:
+        - in: path
+          name: userNic
+          required: true
+          schema:
+            type: integer
+      
+      tags:
+        - gestao de contas
+      
+      responses:
+        '200':
+          description: Conta reativada com sucesso.
+        '400':
+          description: userNic inválido.
+        '404':
+          description: Utilizador não encontrado.
+
+  /user/{userNic}:
+    get:
+      summary: Encontra um utilizador usando o seu NIC.
+      description: Procura um utilizador através de um NIC, e devolve um JSON com o utilizador que tenha esse NIC.
+      
+      parameters:
+        - in: path
+          name: userNic
+          required: true
+          schema:
+            type: integer
+      
+      tags:
+        - utilizador
+        
+      responses:
+        '200':
+          description: Um JSON com um utilizador com o NIC especificado.
+        '404':
+          description: Utilizador não foi encontrado
+        '400':
+          description: userNic inválido.
+    
+    put:
+      summary: "[RF-01] Atualiza um utilizador."
+      description: Atualiza um utilizador com um NIC específico.
+            
+      parameters:
+        - in: path
+          name: userNic
+          required: true
+          schema:
+            type: integer
+      
+      tags:
+        - utilizador
+        
+      responses:
+        '200':
+          description: Um JSON com um utilizador atualizado.
+        '404':
+          description: Utilizador não foi encontrado
+        '400':
+          description: userNic inválido.
+    
+    delete:
+      summary: "[RF-01] Apaga um utilizador."
+      description: Remove um utilizador com um NIC específico.
+      
+      parameters:
+        - in: path
+          name: userNic
+          required: true
+          schema:
+            type: integer
+      
+      tags:
+        - utilizador
+        
+      responses:
+        '200':
+          description: Utilizador apagado com sucesso.
+        '404':
+          description: Utilizador não encontrado.
+        '400':
+          description: userNic inválido.
+     
+  /police:
+    post:
+      summary: "[RF-03] Cria um utilizador polícia."
+      description: Cria um utilizador do tipo polícia com as informações fornecidas.
+      
+      tags:
+        - polícia
+  
+      responses:
+        '201':
+          description: JSON com utilizador polícia.
+        '404':
+          description: Recurso não encontrado.
+        '409':
+          description: Polícia já existe.
+          
+  /police/{policeId}:
+    put:
+      summary: "[RF-03] Atualiza um utilizador polícia."
+      description: Atualiza um utilizador do tipo polícia com as informações fornecidas.
+      
+      parameters:
+        - in: path
+          name: policeId
+          required: true
+          schema:
+            type: integer
+        
+      tags:
+        - polícia
+  
+      responses:
+        '200':
+          description: JSON com utilizador polícia atualizado.
+        '404':
+          description: Polícia não foi encontrado
+        '400':
+          description: Polícia inválido.
+          
+    delete:
+      summary: "[RF-03] Remove um utilizador polícia."
+      description: Remove um utilizador do tipo polícia com as informações fornecidas.
+      
+      parameters:
+        - in: path
+          name: policeId
+          required: true
+          schema:
+            type: integer
+        
+      tags:
+        - polícia
+  
+      responses:
+        '200':
+          description: Polícia removido.
+        '404':
+          description: Polícia não foi encontrado
+        '400':
+          description: Polícia inválido.
+          
+  /policeStation:
+    post:
+      summary: "[RF-02] Cria um posto de polícia."
+      description: Cria um posto de polícia com as informações fornecidas.
+      
+      tags:
+        - estação de polícia
+  
+      responses:
+        '200':
+          description: JSON com posto de polícia criado.
+        '404':
+          description: Recurso não encontrado.
+        '409':
+          description: Posto já existe.
+     
+  /policeStation/{stationId}:   
+    put:
+      summary: "[RF-02] Atualiza um posto de polícia"
+      description: Atualiza um posto de polícia com as informações fornecidas.
+      
+      parameters:
+        - in: path
+          name: stationId
+          required: true
+          schema:
+            type: integer
+      
+      tags:
+        - estação de polícia
+  
+      responses:
+        '200':
+          description: JSON com o posto atualizado.
+        '404':
+          description: Posto não foi encontrado
+        '400':
+          description: Posto inválido.
+          
+    
+    delete:
+      summary: "[RF-02] Remove um posto de polícia."
+      description: Remove um posto de polícia com as informações fornecidas.
+      
+      parameters:
+        - in: path
+          name: stationId
+          required: true
+          schema:
+            type: integer
+      
+      tags:
+        - estação de polícia
+  
+      responses:
+        '200':
+          description: Posto removido.
+        '404':
+          description: Posto não foi encontrado
+        '400':
+          description: Posto inválido.
+          
+  /lostObject:
+    post:
+      summary: "[RF-06] Regista um objeto."
+      description: Regista um objeto perdido com as informações fornecidas.
+      
+      tags:
+        - objetos perdidos
+        
+      responses:
+        '201':
+          description: JSON com objeto perdido criado.
+        '404':
+          description: Recurso não encontrado.
+        '409':
+          description: Objeto perdido inválido.
+          
+    put:
+      summary: "[RF-06] Atualiza as informações de um objeto perdido."
+      description: Atualiza um objeto perdido com as informações fornecidas.      
+      
+      tags:
+        - objetos perdidos
+      
+      responses:
+        '200':
+          description: Objeto perdido atualizado.
+        '404':
+          description: Objeto perdido não foi encontrado.
+        '400':
+          description: Objeto perdido inválido.
+          
+    
+    delete:
+      summary: "[RF-06] Remove um objeto perdido."
+      description: Remove um objeto perdido com as informações fornecidas.      
+      
+      tags:
+        - objetos perdidos
+      
+      responses:
+        '200':
+          description: Objeto perdido removido.
+        '404':
+          description: Objeto perdido não foi encontrado.
+        '400':
+          description: Objeto perdido inválido.
+          
+  /foundObject:
+    post:
+      summary: "[RF-06] Regista um objeto achado."
+      description: Regista um objeto achado com as informações fornecidas.
+      
+      tags:
+        - objetos achados
+        
+      responses:
+        '201':
+          description: JSON com objeto achado criado.
+        '404':
+          description: Recurso não encontrado.
+        '409':
+          description: Objeto achado inválido.
+    put:
+      summary: "[RF-06] Atualiza as informações de um objeto achado."
+      description: Atualiza um objeto achado com as informações fornecidas.
+      tags:
+        - objetos achados
+      
+      responses:
+        '200':
+          description: Objeto achado atualizado.
+        '404':
+          description: Objeto achado não foi encontrado.
+        '400':
+          description: Objeto achado inválido.
+    
+    delete:
+      summary: "[RF-06] Remove um objeto achado."
+      description: Remove um objeto achado com as informações fornecidas.
+      
+      tags:
+        - objetos achados
+      
+      responses:
+        '200':
+          description: Objeto achado removido.
+        '404':
+          description: Objeto achado não foi encontrado.
+        '400':
+          description: Objeto achado inválido.
+  
+  /foundObject/searchCorrespondence:
+    get:
+      summary: "[RF-12] Obter objetos achados que correspondam a objetos perdidos."
+      description: Devolve objetos achados que correspondam a um objeto perdido.
+      
+      tags:
+        - objetos achados
+        
+      responses:
+        '200':
+          description: Objeto correspondentes encontrados.
+        '404':
+          description: Recurso não foi encontrado.
+        '400':
+          description: Objetos inválido.
+
+  /foundObject/{objectId}/registerDelivery:
+    put:
+      summary: "[RF-16] Regista a entrega de um objeto achado ao seu dono."
+      description: Regista a entrega de um objeto achado ao seu dono.
+
+      parameters:
+        - in: path
+          name: objectId
+          required: true
+          schema:
+            type: integer
+
+      tags:
+        - objetos achados
+        
+      responses:
+        '200':
+          description: Registo da entrega feito com sucesso.
+        '404':
+          description: Recurso não foi encontrado.
+        '400':
+          description: Parâmetros inválidos.
+
+  /user/{userNic}/getAllLostObjects:
+    get:
+      summary: "[RF-07] Obter histórico de objetos perdidos."
+      description: Devolve todos os objetos perdidos associados a um utilizador.      
+      
+      parameters:
+        - in: path
+          name: userNic
+          required: true
+          schema:
+            type: string
+      
+      tags:
+        - objetos perdidos
+      
+      responses:
+        '200':
+          description: Objeto perdidos obtidos com sucesso.
+        '404':
+          description: Recurso não foi encontrado.
+        '400':
+          description: Parâmetros inválidos.
+
+  /user/{userNic}/getAllFoundObjects:
+    get:
+      summary: "[RF-09] Obter histórico de objetos achados."
+      description: Devolve todos os objetos perdidos associados a um utilizador.
+      
+      parameters:
+        - in: path
+          name: userNic
+          required: true
+          schema:
+            type: string
+      
+      tags:
+        - objetos achados
+      
+      responses:
+        '200':
+          description: Objeto perdidos obtidos com sucesso.
+        '404':
+          description: Recurso não foi encontrado.
+        '400':
+          description: Parâmetros inválidos.
+
+  /foundObject/{objectId}/owner/{userNic}:
+    post:
+      summary: "[RF-14] Regista o dono de um objeto achado."
+
+      
+      parameters:
+        - in: path
+          name: userNic
+          required: true
+          schema:
+            type: integer
+        
+        - in: path  
+          name: objectId
+          required: true
+          schema:
+            type: integer
+      
+      tags:
+        - objetos achados
+        
+      responses:
+        '200':
+          description: Dono adicionado com sucesso.
+          
+    put:
+      summary: "[RF-14] Edita o dono de um objeto achado."
+      
+      parameters:
+        - in: path
+          name: userNic
+          required: true
+          schema:
+            type: integer
+        
+        - in: path  
+          name: objectId
+          required: true
+          schema:
+            type: integer
+      
+      tags:
+        - objetos achados
+        
+      responses:
+        '200':
+          description: Dono adicionado com sucesso.
+        '404':
+          description: Recurso não foi encontrado.
+        '400':
+          description: Parâmetros inválidos.
+  
+    delete:
+      summary: "[RF-14] Remove o dono a um objeto achado."
+      
+      parameters:
+        - in: path
+          name: userNic
+          required: true
+          schema:
+            type: integer
+        
+        - in: path  
+          name: objectId
+          required: true
+          schema:
+            type: integer
+      
+      tags:
+        - objetos achados
+        
+      responses:
+        '200':
+          description: Dono adicionado com sucesso.
+        '404':
+          description: Recurso não foi encontrado.
+        '400':
+          description: Parâmetros inválidos.
+
+  /object/compare/{foundObjectId}/{lostObjectId}:
+    get:
+      summary: "[RF-13] Compara dois objetos, um perdido e um achado."
+      description: Devolve as diferenças entre dois objetos um perdido e um achado.
+
+      parameters:
+        - in: path
+          name: foundObjectId
+          required: true
+          schema:
+            type: integer
+  
+        - in: path
+          name: lostObjectId
+          required: true
+          schema:
+            type: integer
+  
+      tags:
+        - objetos
+        
+      responses:
+        '200':
+          description: Comparação obtida com sucesso.
+        '404':
+          description: Recurso não foi encontrado.
+        '400':
+          description: Parâmetros inválidos.
+
+  /lostObject/notifyOwner:
+    get:
+      summary: "[RF-15] Notifica o dono de um objeto perdido que este foi achado."
+      
+      tags:
+        - notificações de objetos
+        
+      responses:
+        '200':
+          description: Dono notificado com sucesso.
+        '404':
+          description: Recurso não foi encontrado.
+        '400':
+          description: Parâmetros inválidos.
+        
+  /objects/getStatistics:
+    get:
+      summary: "[RF-17] Devolve estatísticas e mapas de objetos perdidos e achados."
+          
+      tags:
+        - objetos
+        
+      responses:
+        '200':
+          description: Estatísticas e mapas encontrados com sucesso.
+        '404':
+          description: Recurso não foi encontrado.
+        '400':
+          description: Parâmetros inválidos.
+          
+  /auction:
+    post:
+      summary: "[RF-18] Cria um leilão."
+    
+      tags:
+        - leilões
+    
+      responses:
+        '201':
+          description: JSON com objeto achado criado.
+        '404':
+          description: Recurso não encontrado.
+        '409':
+          description: Objeto achado inválido.
+    
+    put:
+      summary: "[RF-18] Edita um leilão."
+    
+      tags:
+        - leilões
+    
+      responses:
+        '200':
+          description: Leilão editado com sucesso.
+        '404':
+          description: Recurso não foi encontrado.
+        '400':
+          description: Parâmetros inválidos.
+    
+    delete:
+      summary: "[RF-18] Remove um leilão."
+
+    
+      tags:
+        - leilões
+    
+      responses:
+        '200':
+          description: Leilão removido com sucesso.
+        '404':
+          description: Recurso não foi encontrado.
+        '400':
+          description: Parâmetros inválidos.
+
+  /auction/getAuctions/{initialDate}/{finalDate}:
+    get:
+      summary: "[RF-19] Obtém todos os leilões ( planeados e acabados ) entre os parâmetros."
+
+      parameters:
+        - in: path
+          name: initialDate
+          required: true
+          schema:
+            type: string
+            format: date
+      
+        - in: path
+          name: finalDate
+          required: true
+          schema:
+            type: string
+            format: date
+
+      tags:
+        - leilões
+        
+      responses:
+        '200':
+          description: Leilões obtidos com sucesso.
+        '404':
+          description: Recurso não foi encontrado.
+        '400':
+          description: Parâmetros inválidos.
+
+  /auction/{auctionId}/subscribe/user/{userNic}:
+    put:
+      summary: "[RF-20] Subscreve um user a um leilão."
+
+      parameters:
+        - in: path
+          name: auctionId
+          required: true
+          schema:
+            type: integer
+      
+        - in: path
+          name: userNic
+          required: true
+          schema:
+            type: integer
+
+      tags:
+        - leilões
+        
+      responses:
+        '200':
+          description: Leilões subscrito com sucesso.
+        '404':
+          description: Recurso não foi encontrado.
+        '400':
+          description: Parâmetros inválidos.
+  
+  /auction/{auctionId}/notify:
+    get:
+      summary: "[RF-21] Notifica os utilizadores subscritos do evento mais recento no leilão."
+      
+      parameters:
+        - in: path
+          name: auctionId
+          required: true
+          schema:
+            type: integer
+          
+      tags:
+        - leilões
+        
+      responses:
+        '200':
+          description: Notificação enviada com sucesso.
+        '404':
+          description: Recurso não foi encontrado.
+        '400':
+          description: Parâmetros inválidos.
+  
+  /auction/{auctionId}/unsibscribe/user/{userNic}:
+    put:
+      summary: "[RF-20] Dessubscreve um user a um leilão."
+
+      parameters:
+        - in: path
+          name: auctionId
+          required: true
+          schema:
+            type: integer
+      
+        - in: path
+          name: userNic
+          required: true
+          schema:
+            type: integer
+
+      tags:
+        - leilões
+        
+      responses:
+        '200':
+          description: Leilões dessubscrito com sucesso.
+        '404':
+          description: Recurso não foi encontrado.
+        '400':
+          description: Parâmetros inválidos.
+  
+  /auction/{auctionId}/begin:
+    put:
+      summary: "[RF-22] Começa um leilão."
+
+      parameters:
+        - in: path
+          name: auctionId
+          required: true
+          schema:
+            type: integer
+
+      tags:
+        - leilões
+        
+      responses:
+        '200':
+          description: Leilão iniciado com sucesso.
+        '404':
+          description: Recurso não foi encontrado.
+        '400':
+          description: Parâmetros inválidos.
+
+  /auction/{auctionId}/end:
+    put:
+      summary: "[RF-22] Termina um leilão."
+
+      parameters:
+        - in: path
+          name: auctionId
+          required: true
+          schema:
+            type: integer
+
+      tags:
+        - leilões
+        
+      responses:
+        '200':
+          description: Leilão terminado com sucesso.
+        '404':
+          description: Recurso não foi encontrado.
+        '400':
+          description: Parâmetros inválidos.
+
+  /auction/{auctionId}/getHistory:
+    get:
+      summary: "[RF-23] Obtém o histórico de licitações de um leilão."
+      description: Devolve o histórico de licitações feitas num leilão.
+
+      parameters:
+        - in: path
+          name: auctionId
+          required: true
+          schema:
+            type: integer
+            
+      tags:
+        - leilões
+        
+      responses:
+        '200':
+          description: Histórico do leilão obtido com sucesso.
+        '404':
+          description: Recurso não foi encontrado.
+        '400':
+          description: Parâmetros inválidos.
+  
+  /auction/{auctionId}/user/{userNic}/makeOffer/{value}:
+    put:
+      summary: "[RF-24] Licita num leilão um valor dado."
+      description: Faz uma licitação através de um utilizador num leilão. 
+
+      parameters:
+        - in: path
+          name: auctionId
+          required: true
+          schema:
+            type: integer
+      
+        - in: path
+          name: userNic
+          required: true
+          schema:
+            type: integer
+      
+        - in: path
+          name: value
+          required: true
+          schema:
+            type: integer
+
+      tags:
+        - leilões
+        
+      responses:
+        '200':
+          description: Licitação feita com sucesso.
+        '404':
+          description: Recurso não foi encontrado.
+        '400':
+          description: Parâmetros inválidos.
+  
+  /auction/getAll:
+    get:
+      summary: "[RF-26] Devolve o histórico de objetos comprados em leilões."
+      description: Devolve todos os objeto comprados em leilões pagos.
+
+      tags:
+        - leilões
+        
+      responses:
+        '200':
+          description: Leilões obtidos com sucesso.
+        '404':
+          description: Recurso não foi encontrado.
+        '400':
+          description: Parâmetros inválidos.
+  
+components:
+  schemas:
+    Utilizador:
+      type: object
+      properties:
+        nif:
+          type: integer
+          example: 111111111
+        nic:
+          type: integer
+          example: 200302078
+        nome:
+          type: string
+          example: Rui Borjes
+        genero:
+          type: string
+          example: Outro
+        ano_nasc:
+          type: string
+          format: date
+          example: 23-4-1986
+        telemovel:
+          type: integer
+          example: 966767089
+        morada:
+          type: string
+          example: Campo Grande 016, 1749-016 Lisboa
+        email:
+          type: string
+          example: johnsmith@gmail.com
+        ativa:
+          type: boolean
+          example: true ou false
+          
+    Policia:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        nome: 
+          type: string
+          example: Rui Borjes
+        
+    Posto:
+      properties:
+        id:
+          type: integer
+          example: 1
+        morada:
+          type: string
+          example: Campo Grande 016, 1749-016 Lisboa
+    
+    Objeto:
+      properties:
+        id:
+          type: integer
+          example: 1
+        descricao:
+          type: string
+          example: Bolsa pequena azul.
+        categoria:
+          type: object
+    
+    ObjetoAchado:
+      properties:
+        id:
+          type: integer
+          example: 1
+        descricao:
+          type: string
+          example: Bolsa pequena azul.
+        objPerdido:
+          type: integer
+          example: 1
+        dono:
+          type: object
+          format: Utilizador
+        prazoInicio:
+          type: string
+          format: date
+          example: 10-2-2024
+        prazoFim:
+          type: string
+          format: date
+          example: 31-2-2024
+        user:
+          type: object
+          format: Utilizador
+        localAchado:
+          type: object
+        dataAchado:
+          type: string
+          format: date
+          example: 25-1-2024
+    
+    ObjetoPerdido:
+      properties:
+        id:
+          type: integer
+          example: 1
+        descricao:
+          type: string
+          example: Bolsa pequena azul.
+        user:
+          type: integer
+          example: 1
+        dataInicio:
+          type: string
+          format: date
+          example: 1-2-2024
+        dataFim:
+          type: string
+          format: date
+          example: 10-2-2024
+        localAchado:
+          type: object
+        dataAchado:
+          type: string
+          format: date
+          example: 25-1-2024
+        
+    Leilao:
+      properties:
+        id:
+          type: integer
+          example: 1
+          
+        valorMonetario:
+          type: integer
+          example: 500
+          
+        dataInicio:
+          type: string
+          format: date
+          example: 11-2-2024
+        
+        dataFim:
+          type: string
+          format: date
+          example: 29-2-2024
+          
+        objectAchado:
+          type: integer
+          example: 1
+          
+        pago:
+          type: boolean
+          example: false
+          
+    Licitacao:
+      properties:
+        user:
+          type: integer
+          example: 1
+        
+        valor:
+          type: integer
+          example: 520
+        
+        leilao:
+          type: integer
+          example: 1
+        
+        data:
+          type: string
+          format: date
+          example: 12-2-2024
