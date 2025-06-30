@@ -1,7 +1,7 @@
 # Amazon Co-Purchases Project
   This folder contains the files produced in the analysis of the Amazon Co-Purchases network dataset. This project was developed to learn and better understand the techniques used in Network Science to analyze large networks.
 
-## Repository Contents
+## Folder Contents
 
 - **`report.pdf`**  
   The final report, written for the project, contains the results and all the images and graphs produced for this project. This report also explains the methodology chosen and the decisions that were taken through the analysis.
