@@ -1,7 +1,7 @@
 # Deep Fake Detection Project
   This folder contains all the code, example images, a final report and a poster designed for a poster session about Deep Learning projects that were developed for the Deep Fake Detection Project.
 
-## Contents
+## Folder Contents
 
 - **Gradcam_examples folder**  
   This folder contains some interpretability elements developed for this project, mainly the gradcam activations in the images.
