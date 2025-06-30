@@ -1,6 +1,6 @@
 # Nuno Correia, 58638 student at FCUL's Data Science Masters
 # Portfolio
-  This repository contains some of the project that I've developed along my univerity studies
+  This repository contains some of the project that I've developed along my univerity studies.
 
 ## Repository Contents
 - **Amazon_Co-Purchases**
